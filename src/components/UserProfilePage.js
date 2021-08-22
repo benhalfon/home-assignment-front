@@ -1,7 +1,7 @@
 import Button from "./Button"
 import {useState,useEffect} from 'react'
 import Header from './Header'
-import { Link } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
 import {IsBirthDateValid} from '../utils/validationUtils'
 var axios = require('axios');
@@ -166,15 +166,22 @@ function UserProfilePage(props) {
                     <Button color='green' text='Save' onClick={() =>onSave(originData.id,email,firstName,lastName,address,birthDate) }></Button>
                     <Button onClick={() => resetData()} text="Reset"></Button>
                     
-                    <Link to="/">back</Link>
                     </div>
                     :
                     <div>
                     <Button color='purple' text='Edit' onClick={() =>onEdit()}></Button>
                     
-                    <Link to="/">back</Link>
                     </div>
                     }
+
+          <Button  color='black' text='Show users' onClick={() =>{
+            props.history.replace( {
+            pathname: '/displayAll',
+            search: '?token='+queryObj["token"]+'&id='+queryObj["id"]
+            });
+            } }></Button>
+            
+            <Link to="/">Exit</Link>
                    
                     
             </div>

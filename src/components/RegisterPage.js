@@ -3,7 +3,7 @@ import Header from './Header'
 import {useState} from 'react'
 import Button from './Button'
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 import swal from '@sweetalert/with-react';
 import {IsEmailValid,IsBirthDateValid} from '../utils/validationUtils'
 

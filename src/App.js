@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
+import DisplayAllPage from "./components/DisplayAllPage";
 import UserProfilePage from "./components/UserProfilePage";
 import { BrowserRouter, Route,Redirect } from 'react-router-dom'
 
@@ -15,6 +16,7 @@ function App() {
         <Route exact path='/index' component={LoginPage}></Route>
         <Route path='/signup' component={RegisterPage}></Route>
         <Route path='/userProfilePage' component={UserProfilePage}></Route>
+        <Route path='/displayAll' component={DisplayAllPage}></Route>
       </BrowserRouter>
     </div>
   );
