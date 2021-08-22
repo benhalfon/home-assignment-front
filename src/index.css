@@ -10,6 +10,16 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.transparentArea{
+  background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    display:inline-block;
+    outline:none;
+}
+
 .container {
   max-width: 500px;
   margin: 30px auto;
@@ -47,6 +57,13 @@ body {
 
 .btn:active {
   transform: scale(0.98);
+}
+
+.passwordPolicyItem {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .btn-block {

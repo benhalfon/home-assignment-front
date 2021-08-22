@@ -2,9 +2,9 @@ import ButtonRegister from './ButtonRegister'
 import Header from './Header'
 import {useState} from 'react'
 import Button from './Button'
+import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import LoginPage from './LoginPage';
-import swal from 'sweetalert';
+import swal from '@sweetalert/with-react';
 import {IsEmailValid,IsBirthDateValid} from '../utils/validationUtils'
 
 var axios = require('axios');
@@ -23,7 +23,6 @@ function validate(email,password,firstName,lastName,address,birthDate) {
 }
 
 function RegisterPage() {
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [firstName, setFirstName] =  useState('')
@@ -38,6 +37,28 @@ function RegisterPage() {
         setLastName('');
         setAddress('');
         setBirthDate('');
+    }
+
+    const passwordAlert = ()=>{
+      swal({
+        text: "Password policy",
+        icon: "info",
+        buttons: {
+          cancel: "Close",
+        },
+        content: 
+        (
+          <div> <ul>
+          <li  className="passwordPolicyItem">password length between 8 to 30</li>
+          <li  className="passwordPolicyItem">at least 1 uppercase character</li>
+          <li  className="passwordPolicyItem">at least 1 digit</li>
+          <li  className="passwordPolicyItem">numerical sequence less then 3</li>
+          <li  className="passwordPolicyItem">alphabetical sequence less then 3</li>
+          <li  className="passwordPolicyItem">qwerty sequence less then 3</li>
+          <li  className="passwordPolicyItem">white space not allowed</li>
+          </ul></div>
+        )
+      })
     }
 
     const onRegister = (email,password,firstName,lastName,address,birthDate)=>{
@@ -66,7 +87,7 @@ function RegisterPage() {
           console.log(JSON.stringify(data));
         var config = {
             method: 'post',
-            url: `http://localhost:9090/users`,
+            url: `https://tranquil-peak-25178.herokuapp.com/users`,
             headers: { 
               'accept': 'application/json', 
               'Content-Type': 'application/json',
@@ -87,7 +108,38 @@ function RegisterPage() {
             resetData();
           })
           .catch(function (error) {
-            console.log(error);
+            console.log('error',error);
+            if(error.response.status){
+              if(error.response.status==400){
+                
+                console.log('error.response.data',error.response.data);
+                if(error.response.data.message.includes("Password policy error:")){
+                  var errorMsg =error.response.data.message.split("Password policy error:")[1].split(',')
+                  
+                  
+                  swal({
+                    text: "Password policy error!",
+                    icon: "error",
+                    buttons: {
+                      cancel: "Close",
+                    },
+                    content: 
+                    (
+                      <div>
+                         <ul>
+                            {errorMsg.map((item,index)=>{
+                                return <li className="passwordPolicyItem">{item}</li>
+                            })}
+                        </ul>
+                      </div>
+                    )
+                  })
+
+
+                    }
+                  }
+            }
+
           });
 
        
@@ -114,8 +166,13 @@ function RegisterPage() {
                     <label>Email</label>
                     <input type="text" placeholder='Email' value={email} required onChange={(e) => setEmail(e.target.value)}></input>
 
+                    
+                   
+
                     <label>Password</label>
+                    <button className="transparentArea" onClick={() => passwordAlert()}> <BsFillQuestionCircleFill onClick={() => passwordAlert()}></BsFillQuestionCircleFill> </button>
                     <input type="password" placeholder='Password' value={password} minLength='8' required onChange={(e) => setPassword(e.target.value)}></input>
+
 
                     <ButtonRegister onClick={() =>onRegister(email,password,firstName,lastName,address,birthDate) }></ButtonRegister>
                     <Button onClick={() => resetData()} text="Reset"></Button>

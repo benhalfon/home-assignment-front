@@ -46,12 +46,9 @@ function LoginPage({history}) {
             }
         }
 
-
-        console.log('url',process.env.SERVER_URL);
-
         var config = {
           method: 'get',
-          url: `http://localhost:9090/users?email=`+email,
+          url: `https://tranquil-peak-25178.herokuapp.com/users?email=`+email,
           headers: { 
             'Authorization': 'Basic '+userToken
           }
@@ -70,30 +67,6 @@ function LoginPage({history}) {
         });
         
 
-
-        // AxiosHelper.get('http://localhost:8080/users?email='+email, {}, {
-        //   auth: {
-        //     username: email,
-        //     password: password
-        //   }}
-        // ).then(res => {
-        //       console.log('login', res.data);
-        //       console.log('id', res.data[0].id);
-        //       history.replace( {
-        //         pathname: '/userProfilePage',
-        //         search: '?id='+res.data[0].id
-        // });
-        //   }).catch(function (error) {
-        //         console.log("login error",error);
-        //         if (error?.response?.data?.message) {
-        //           console.log(error.response.data.message);
-        //           swal({
-        //             title: "User not found!",
-        //             text: error.response.data.message,
-        //             icon: "error",
-        //           });
-        //         }
-              // });
 
     }
 
