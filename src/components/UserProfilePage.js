@@ -174,14 +174,17 @@ function UserProfilePage(props) {
                     </div>
                     }
 
-          <Button  color='black' text='Show users' onClick={() =>{
+          <Button  color='blue' text='Show users' onClick={() =>{
             props.history.replace( {
             pathname: '/displayAll',
             search: '?token='+queryObj["token"]+'&id='+queryObj["id"]
             });
             } }></Button>
-            
-            <Link to="/">Exit</Link>
+            <Button text="Exit" color='black' onClick={() =>{
+            props.history.replace( {
+            pathname: '/'
+            });
+            } }></Button>
                    
                     
             </div>

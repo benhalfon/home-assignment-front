@@ -22,7 +22,7 @@ function DisplayAllPage(props) {
     const queryObj = parseQuery(props.location.search)
     console.log('queryObj',queryObj);
     console.log('token',queryObj["token"]);
-    const [userData, setUsers] =  useState({})
+    const [userData, setUsers] =  useState([])
 
     useEffect(()=> {
         var config = {
@@ -36,7 +36,6 @@ function DisplayAllPage(props) {
         .then(function (response) {
             console.log('response displayAll:',JSON.stringify(response.data));
             setUsers(response.data);
-            userData.forEach((item)=> console.log('displayAll item',item.id))
           })
         .catch(function (error) {
             console.log(error);
@@ -44,20 +43,28 @@ function DisplayAllPage(props) {
       },[])
 
     return (
-        <div>
+        <div className="bigContainer">
              {userData.map((data,id)=>{
-                return <div key={id}>
-                    <h2>{data.id}</h2>
-                    <p>{data.email}</p>
+                return <div className="task" key={id}>
+                    <h2>[{data.id}] {data.email}</h2>
+                    <h3>{data.firstName} {data.lastName}</h3>
+                    <p>{data.birthDate} {data.address}</p>
                     </div>
             })}
 
-            <Button onClick={() =>{
+            <Button text="Back to profile" color="blue" onClick={() =>{
             props.history.replace( {
             pathname: '/userProfilePage',
             search: '?token='+queryObj["token"]+'&id='+queryObj["id"]
             });
             } }></Button>
+
+            <Button text="Exit" color='black' onClick={() =>{
+            props.history.replace( {
+            pathname: '/'
+            });
+            } }></Button>
+       
         </div>
     )
 }
